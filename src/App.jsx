@@ -1,8 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import ArticleList from "./components/ArticleList";
 import Header from "./components/Header";
+import ArticleList from "./components/ArticleList";
+import ArticlePage from "./components/ArticlePage";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<ArticleList />} />
+        <Route path="/articles/:article_id" element={<ArticlePage />} />
       </Routes>
     </div>
   );

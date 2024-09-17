@@ -42,6 +42,32 @@
   object-fit: cover;
 }
 
+.article-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.article-page h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.article-page img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.article-page p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
