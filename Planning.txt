@@ -1,0 +1,103 @@
+1. Routes and Data Structure: 
+
+-/: Home page displaying a list of articles (Consider pagination)
+-/articles/:article_id: Individual article page, including comments
+-/articles/:topic: Filtered article list based on a specific topic
+-/topics: Topics page (list of available topics)
+-/users/:username: User profile page (user information)
+
+2. Component Tree Planning:
+
+-App: Root component managing routing and some global state.
+-Header:  Contains navigation links (global, no state).
+-ArticleList: Displays a paginated list of articles (fetches articles data from the API).
+-ArticleCard: Displays a single article with title, image, upvote/downvote, comment count and vote count.
+              Event Handlers: Triggers navigation to ArticlePage when clicked.
+-ArticlePage: Shows the full article content, comments, and voting options.
+              Fetches the article details and comments using the article_id.
+              Child Components:
+              Comments: Fetches and renders comments for the article.
+              VoteButton: Handles voting for the article.
+              CommentForm: Allows users to post a new comment.
+-Comments: Renders a list of comments associated with an article, fetching data from the API.
+           Receives article_id to fetch comments from the API.
+-CommentForm: Allows posting new comments.
+              Receives article_id and user for submitting the comment.
+-TopicList: Displays a list of topics and filters articles based on selected topics.
+            Receives the list of topics and fetches articles filtered by the selected topic.
+-UserProfile: Displays user information, including their articles, comments, and votes.
+              Displays user information, including articles and comments made by the user.
+-VoteButton: Handles upvote/downvote functionality.
+             Receives the current vote count and handles updates.
+
+3. State Management: 
+
+-App: 
+State:
+-Only manage global state here (like user), and route-specific data will be handled in individual components.
+Props Passed:
+-Pass user to UserProfile.
+Context: 
+-Use React Context for global user state.
+
+-Header:
+-No state required.
+Props:
+-Navigation links provided for routing.
+
+-ArticleList (Fetches Articles):
+State:
+-articles (array): Fetched from the /articles API directly in the component.
+-topic: If passed from TopicList, filter articles by topic.
+Props:
+Receives topic from TopicList (Articles by topic).
+
+-ArticleCard:
+Props:
+Receives an individual article object (including title, author, votes, etc.).
+Event Handlers:
+Can trigger navigation to ArticlePage by clicking on the article.
+
+-ArticlePage (Fetches Article and Comments):
+State:
+-article (object): Fetched from the /articles/:article_id endpoint.
+-comments (array): Fetched from /articles/:article_id/comments endpoint.
+Props:
+-Receives article_id
+Child Components:
+-Passes comments to Comments and manages comment updates in CommentForm.
+
+-Comments (Fetches Comments):
+State:
+-comments (array): Fetched from the /articles/:article_id/comments API.
+Props:
+Receives article_id from ArticlePage to fetch the comments.
+
+-CommentForm:
+State:
+-newComment (string) - Holds the text input for a new comment.
+Props:
+Receives the article_id and user to submit the new comment.
+Event Handlers:
+Submits the new comment to the backend (via /articles/:article_id/comments).
+
+-TopicList (Fetches Topics):
+State:
+-topics (array): Fetched from the /topics API.
+Props:
+-Receives articles and filters them by selected topic.
+
+-UserProfile (Fetches User Data):
+Props:
+-Receives user object from global state or fetched by username.
+
+VoteButton:
+Props:
+-Receives votes count and handles vote updates.
+State:
+-Could manage local userVote to reflect UI changes after upvote/downvote action.
+
+4.UX Considerations: 
+-Loading Indicators: Display spinners or indicators while fetching data.
+-Error Handling: Provide clear error messages to the user.
+-Responsive Design: Ensure the app works well on various screen sizes.
