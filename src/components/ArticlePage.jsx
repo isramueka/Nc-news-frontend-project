@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getArticleById } from "../../utils/api";
+import CommentList from "./CommentList";
 
 const ArticlePage = () => {
   const { article_id } = useParams();
@@ -33,10 +34,16 @@ const ArticlePage = () => {
     <div className="article-page">
       <h1>{article.title}</h1>
       <img src={article.article_img_url} alt={article.title} />
+      <p>
+        <strong>By:</strong> {article.author}
+      </p>
       <p>{article.body}</p>
-      <p>Author: {article.author}</p>
-      <p>Votes: {article.votes}</p>
-      <p>Comments: {article.comments_count}</p>
+      <p>
+        <strong>Votes:</strong> {article.votes} &nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>Comments:</strong>
+        {article.comments_count}
+      </p>
+      <CommentList article_id={article_id} />
     </div>
   );
 };
