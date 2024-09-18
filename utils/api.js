@@ -21,3 +21,11 @@ export function getCommentsByArticleId(article_id) {
     return data;
   });
 }
+
+export function updateArticleVotes(article_id, voteChange) {
+  return ncNewsAPI
+    .patch(`/articles/${article_id}`, { upd_votes: voteChange })
+    .then(({ data }) => {
+      return data.article;
+    });
+}
