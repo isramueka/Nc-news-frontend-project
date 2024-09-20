@@ -4,8 +4,8 @@ const ncNewsAPI = axios.create({
   baseURL: "https://nc-news-project-fd36.onrender.com/api",
 });
 
-export function getArticles() {
-  return ncNewsAPI.get("/articles").then(({ data }) => {
+export function getArticles(params = {}) {
+  return ncNewsAPI.get("/articles", { params }).then(({ data }) => {
     return data;
   });
 }

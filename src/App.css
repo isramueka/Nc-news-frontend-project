@@ -7,6 +7,22 @@
   color: white;
 }
 
+.header2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #282c34;
+  color: white;
+  height: 30px;
+
+  border-style: hidden;
+}
+
+.header2 h2 {
+  margin: 0;
+}
+
 .article-list-container {
   max-width: auto;
   margin: 0 auto;
@@ -164,6 +180,7 @@ button:disabled {
 
 .topic-list-container {
   width: 150px;
+  margin-top: 10px;
   margin-right: 20px;
   position: sticky;
   top: 0;
@@ -195,6 +212,24 @@ button:disabled {
 
 main {
   display: flex;
+}
+
+.sort-controls {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.sort-controls label {
+  margin-right: 10px;
+}
+
+.sort-controls select {
+  margin-right: 20px;
+}
+
+.sort-controls button {
+  padding: 5px 10px;
 }
 
 #root {
