@@ -4,6 +4,8 @@ import "./App.css";
 import Header from "./components/Header";
 import ArticleList from "./components/ArticleList";
 import ArticlePage from "./components/ArticlePage";
+import TopicList from "./components/TopicList";
+import TopicPage from "./components/TopicPage";
 import { UserProvider } from "./context/UserContext";
 
 const App = () => {
@@ -11,10 +13,18 @@ const App = () => {
     <UserProvider>
       <div>
         <Header />
-        <Routes>
-          <Route path="/" element={<ArticleList />} />
-          <Route path="/articles/:article_id" element={<ArticlePage />} />
-        </Routes>
+        <main>
+          <aside className="topic-list-container">
+            <TopicList />
+          </aside>
+          <div className="article-list-container">
+            <Routes>
+              <Route path="/" element={<ArticleList />} />
+              <Route path="/articles/:article_id" element={<ArticlePage />} />
+              <Route path="/topics/:topic_id" element={<TopicPage />} />
+            </Routes>
+          </div>
+        </main>
       </div>
     </UserProvider>
   );

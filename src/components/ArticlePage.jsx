@@ -105,7 +105,7 @@ const ArticlePage = () => {
       <section>
         <p>
           <Link to="/">
-            <button>⇦</button>
+            <button>Back ⇦</button>
           </Link>
           <strong>By:</strong> {article.author}
         </p>
