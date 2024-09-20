@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { postCommentForArticle } from "../../utils/api";
 
 const CommentForm = ({ article_id, addComment, user }) => {
@@ -26,7 +26,6 @@ const CommentForm = ({ article_id, addComment, user }) => {
 
     postCommentForArticle(article_id, newComment, user)
       .then((newComment) => {
-        console.log(newComment);
         addComment(newComment);
         setCommentText("");
         setIsSubmitting(false);

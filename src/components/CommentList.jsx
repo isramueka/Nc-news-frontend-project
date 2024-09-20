@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CommentCard from "./CommentCard";
 
-const CommentList = ({ comments }) => {
+const CommentList = ({ comments, deleteComment }) => {
   //Handle articles with no comments as PR feedback
   if (comments.length === 0) {
     return <p>No comments yet. Be the first to comment!</p>;
@@ -10,7 +10,11 @@ const CommentList = ({ comments }) => {
   return (
     <div className="comment-list">
       {comments.map((comment) => (
-        <CommentCard key={comment.comment_id} comment={comment} />
+        <CommentCard
+          key={comment.comment_id}
+          comment={comment}
+          deleteComment={deleteComment}
+        />
       ))}
     </div>
   );

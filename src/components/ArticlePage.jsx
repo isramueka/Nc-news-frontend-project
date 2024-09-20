@@ -4,6 +4,7 @@ import {
   getArticleById,
   getCommentsByArticleId,
   updateArticleVotes,
+  deleteCommentById,
 } from "../../utils/api";
 import CommentList from "./CommentList";
 import CommentForm from "./CommentForm";
@@ -79,6 +80,22 @@ const ArticlePage = () => {
     }));
   };
 
+  const deleteComment = (comment_id) => {
+    deleteCommentById(comment_id)
+      .then(() => {
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment.comment_id !== comment_id)
+        );
+        setArticle((prevArticle) => ({
+          ...prevArticle,
+          comments_count: prevArticle.comments_count - 1,
+        }));
+      })
+      .catch(() => {
+        setError("Failed to delete comment");
+      });
+  };
+
   return (
     <article className="article-page">
       <header>
@@ -109,7 +126,7 @@ const ArticlePage = () => {
           addComment={addComment}
           user={user}
         />
-        <CommentList comments={comments} />
+        <CommentList comments={comments} deleteComment={deleteComment} />
       </footer>
     </article>
   );
