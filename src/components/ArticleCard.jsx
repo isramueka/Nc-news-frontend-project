@@ -18,7 +18,9 @@ const ArticleCard = ({ article }) => {
         <Link to={`/articles/${article_id}`}>{title}</Link>
       </h2>
       <img src={article_img_url} alt={title} />
-      <p>{topic}</p>
+      <p>
+        <strong>{topic}</strong>
+      </p>
       <p>By: {author}</p>
       <p>Votes: {votes}</p>
       <p>Comments: {comments_count}</p>
