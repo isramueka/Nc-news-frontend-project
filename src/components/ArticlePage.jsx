@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getArticleById, updateArticleVotes } from "../../utils/api";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, Link } from "react-router-dom";
+import {
+  getArticleById,
+  getCommentsByArticleId,
+  updateArticleVotes,
+} from "../../utils/api";
 import CommentList from "./CommentList";
+import CommentForm from "./CommentForm";
+import Loading from "./Loading";
+import { UserContext } from "../context/UserContext";
 
 const ArticlePage = () => {
   const { article_id } = useParams();
@@ -9,7 +16,10 @@ const ArticlePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [votes, setVotes] = useState(null);
+  const [hasVoted, setHasVoted] = useState(false);
   const [voteError, setVoteError] = useState(null);
+  const { user } = useContext(UserContext);
+  const [comments, setComments] = useState([]);
 
   useEffect(() => {
     setError(null);
@@ -19,14 +29,27 @@ const ArticlePage = () => {
         setVotes(data.article.votes);
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
         setError("Error fetching article");
         setIsLoading(false);
       });
   }, [article_id]);
 
+  useEffect(() => {
+    setError(null);
+    getCommentsByArticleId(article_id)
+      .then((data) => {
+        setComments(data.comments);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError("Error fetching comments");
+        setIsLoading(false);
+      });
+  }, [article_id]);
+
   if (isLoading) {
-    return <p>Loading article...</p>;
+    return <Loading />;
   }
 
   if (error) {
@@ -34,31 +57,61 @@ const ArticlePage = () => {
   }
 
   const handleVote = (voteChange) => {
-    setVoteError(null);
+    // PR on votes
+    if (hasVoted) {
+      setVoteError("You can only vote once.");
+      return;
+    }
     setVotes((currVotes) => currVotes + voteChange);
+    setHasVoted(true);
     updateArticleVotes(article.article_id, voteChange).catch(() => {
       setVotes((currVotes) => currVotes - voteChange);
       setVoteError("Error: Failed to update votes. Please try again.");
+      setHasVoted(false);
     });
   };
 
+  const addComment = (newComment) => {
+    setComments((prevComments) => [newComment, ...prevComments]);
+    setArticle((prevArticle) => ({
+      ...prevArticle,
+      comments_count: prevArticle.comments_count + 1,
+    }));
+  };
+
   return (
-    <div className="article-page">
-      <h1>{article.title}</h1>
+    <article className="article-page">
+      <header>
+        <h1>{article.title}</h1>
+      </header>
       <img src={article.article_img_url} alt={article.title} />
-      <p>
-        <strong>By:</strong> {article.author}
-      </p>
-      <p>{article.body}</p>
-      <p>
-        <button onClick={() => handleVote(1)}>⇧</button>
-        <strong>Votes:</strong> {votes} &nbsp;
-        <button onClick={() => handleVote(-1)}>⇩</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <strong>Comments:</strong> {article.comments_count}
-      </p>
-      <CommentList article_id={article_id} />
-    </div>
+      <section>
+        <p>
+          <Link to="/">
+            <button>⇦</button>
+          </Link>
+          <strong>By:</strong> {article.author}
+        </p>
+        <p>{article.body}</p>
+      </section>
+      <footer>
+        <p>
+          <button onClick={() => handleVote(1)}>⇧</button>
+          <strong>Votes:</strong> {votes}
+          &nbsp;
+          <button onClick={() => handleVote(-1)}>⇩</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          {voteError && <p className="error-message">{voteError}</p>}
+          <strong>Comments:</strong> {article.comments_count}
+        </p>
+        <CommentForm
+          article_id={article_id}
+          addComment={addComment}
+          user={user}
+        />
+        <CommentList comments={comments} />
+      </footer>
+    </article>
   );
 };
 
