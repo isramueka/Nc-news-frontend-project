@@ -86,6 +86,25 @@
   text-align: left;
 }
 
+button {
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: #007bff;
+  color: rgb(7, 2, 2);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;

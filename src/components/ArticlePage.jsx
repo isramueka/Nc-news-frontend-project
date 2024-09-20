@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getArticleById } from "../../utils/api";
+import { getArticleById, updateArticleVotes } from "../../utils/api";
 import CommentList from "./CommentList";
 
 const ArticlePage = () => {
@@ -8,12 +8,15 @@ const ArticlePage = () => {
   const [article, setArticle] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [votes, setVotes] = useState(null);
+  const [voteError, setVoteError] = useState(null);
 
   useEffect(() => {
     setError(null);
     getArticleById(article_id)
       .then((data) => {
         setArticle(data.article);
+        setVotes(data.article.votes);
         setIsLoading(false);
       })
       .catch(() => {
@@ -30,6 +33,15 @@ const ArticlePage = () => {
     return <p>{error}</p>;
   }
 
+  const handleVote = (voteChange) => {
+    setVoteError(null);
+    setVotes((currVotes) => currVotes + voteChange);
+    updateArticleVotes(article.article_id, voteChange).catch(() => {
+      setVotes((currVotes) => currVotes - voteChange);
+      setVoteError("Error: Failed to update votes. Please try again.");
+    });
+  };
+
   return (
     <div className="article-page">
       <h1>{article.title}</h1>
@@ -39,9 +51,11 @@ const ArticlePage = () => {
       </p>
       <p>{article.body}</p>
       <p>
-        <strong>Votes:</strong> {article.votes} &nbsp;&nbsp;&nbsp;&nbsp;
-        <strong>Comments:</strong>
-        {article.comments_count}
+        <button onClick={() => handleVote(1)}>⇧</button>
+        <strong>Votes:</strong> {votes} &nbsp;
+        <button onClick={() => handleVote(-1)}>⇩</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>Comments:</strong> {article.comments_count}
       </p>
       <CommentList article_id={article_id} />
     </div>
