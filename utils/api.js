@@ -29,3 +29,16 @@ export function updateArticleVotes(article_id, voteChange) {
       return data.article;
     });
 }
+
+export const postCommentForArticle = (article_id, comment, loggedInUser) => {
+  const bodyComment = {
+    body: comment.body,
+    username: loggedInUser.username,
+  };
+
+  return ncNewsAPI
+    .post(`/articles/${article_id}/comments`, bodyComment)
+    .then(({ data }) => {
+      return data.comment;
+    });
+};

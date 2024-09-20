@@ -5,19 +5,22 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #121212;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  color: #213547;
+  background-color: #ffffff;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -42,16 +45,8 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: border-color 0.25s, background-color 0.25s;
 }
 
 @media (prefers-color-scheme: light) {
@@ -59,10 +54,150 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
-  a:hover {
-    color: #747bff;
+
+  body {
+    background-color: #ffffff;
+    color: #213547;
   }
+
+  a {
+    color: #646cff;
+  }
+
+  a:hover {
+    color: #535bf2;
+  }
+
   button {
     background-color: #f9f9f9;
+    color: #213547;
+  }
+
+  button:hover {
+    border-color: #646cff;
+  }
+
+  .article-card {
+    background-color: #f9f9f9;
+    color: #000000;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .comment-card {
+    background-color: #f0f0f0;
+    color: #000000;
+  }
+
+  .comment-form {
+    background-color: #ffffff;
+    border-color: #ccc;
+  }
+
+  .comment-form textarea {
+    border-color: #ccc;
+  }
+
+  .comment-form button {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+
+  .comment-form button:hover {
+    background-color: #0056b3;
+  }
+
+  .error-message {
+    color: #e74c3c;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #121212;
+  }
+
+  body {
+    background-color: #121212;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  a {
+    color: #a8d1ff;
+  }
+
+  a:hover {
+    color: #8db6ff;
+  }
+
+  button {
+    background-color: #333333;
+    color: #ffffff;
+    border-color: #646cff;
+  }
+
+  button:hover {
+    background-color: #646cff;
+    border-color: #a8d1ff;
+  }
+
+  .article-card {
+    background-color: #1e1e1e;
+    color: rgba(255, 255, 255, 0.87);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .comment-card {
+    background-color: #2a2a2a;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .article-page {
+    background-color: #1e1e1e;
+    color: rgba(255, 255, 255, 0.87);
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .article-page h1 {
+    color: #ffffff;
+  }
+
+  .article-page img {
+    border: 2px solid #333;
+  }
+
+  .article-page p {
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .comment-form {
+    background-color: #1e1e1e;
+    border-color: #333;
+  }
+
+  .comment-form textarea {
+    border-color: #333;
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+  }
+
+  .comment-form button {
+    background-color: #2980b9;
+    color: #ffffff;
+  }
+
+  .comment-form button:hover {
+    background-color: #1f70a3;
+  }
+
+  .error-message {
+    color: #e74c3c;
   }
 }
