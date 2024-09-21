@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { getArticles } from "../../utils/api";
 import ArticleCard from "./ArticleCard";
 import Loading from "./Loading";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const ArticleList = () => {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { topic_id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const [sortBy, setSortBy] = useState(
     searchParams.get("sort_by") || "created_at"
@@ -16,7 +17,7 @@ const ArticleList = () => {
 
   useEffect(() => {
     setError(null);
-    getArticles({ sort_by: sortBy, order: order })
+    getArticles({ topic: topic_id, sort_by: sortBy, order: order })
       .then((data) => {
         setArticles(data.articles);
         setIsLoading(false);
@@ -25,7 +26,7 @@ const ArticleList = () => {
         setError("Error fetching articles");
         setIsLoading(false);
       });
-  }, [sortBy, order]);
+  }, [topic_id, sortBy, order]);
 
   const handleSortByChange = (e) => {
     setSortBy(e.target.value);

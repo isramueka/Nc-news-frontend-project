@@ -1,11 +1,10 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
 import ArticleList from "./components/ArticleList";
 import ArticlePage from "./components/ArticlePage";
 import TopicList from "./components/TopicList";
-import TopicPage from "./components/TopicPage";
 import { UserProvider } from "./context/UserContext";
 
 const App = () => {
@@ -21,7 +20,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<ArticleList />} />
               <Route path="/articles/:article_id" element={<ArticlePage />} />
-              <Route path="/topics/:topic_id" element={<TopicPage />} />
+              <Route path="/topics/:topic_id" element={<ArticleList />} />
             </Routes>
           </div>
         </main>
